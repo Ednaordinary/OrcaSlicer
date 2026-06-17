@@ -432,7 +432,6 @@ enum FilamentMapMode {
 enum class WaveOverhangPattern : int {
     Monotonic,
     ZigZag,
-    Repeat
 };
 
 extern std::string get_extruder_variant_string(ExtruderType extruder_type, NozzleVolumeType nozzle_volume_type);
