@@ -406,7 +406,7 @@ static void migrate_flatpak_legacy_datadir(const boost::filesystem::path &data_d
     std::cerr << "Migrating Flatpak data dir: " << data_dir_path << std::endl;
 
     std::string legacy_data_dir_str = data_dir_path.string();
-    boost::replace_first(legacy_data_dir_str, "com.orcaslicer.OrcaSlicer", "io.github.orcaslicer.OrcaSlicer");
+    boost::replace_first(legacy_data_dir_str, "com.orcaslicer.OrcaSlicer", "io.github.softfever.OrcaSlicer");
     const fs::path legacy_data_dir(legacy_data_dir_str);
 
     std::cerr << "Legacy Flatpak data dir: " << legacy_data_dir << std::endl;
@@ -472,7 +472,7 @@ static const FileWildcards file_wildcards_by_type[FT_SIZE] = {
     /* FT_OBJ */     { L("OBJ files"),       { ".obj"sv } },
     /* FT_AMF */     { L("AMF files"),       { ".amf"sv, ".zip.amf"sv, ".xml"sv } },
     /* FT_3MF */     { L("3MF files"),       { ".3mf"sv } },
-    /* FT_GCODE_3MF */ {L("Gcode 3MF files"), {".gcode.3mf"sv}},
+    /* FT_GCODE_3MF */ {L("G-code 3MF files"), {".gcode.3mf"sv}},
     /* FT_GCODE */   { L("G-code files"),    { ".gcode"sv} },
 #ifdef __APPLE__
     /* FT_MODEL */
