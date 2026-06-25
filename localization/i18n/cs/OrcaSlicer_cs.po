@@ -4768,7 +4768,7 @@ msgid "Bottom surface"
 msgstr "Spodní povrch"
 
 msgid "Internal bridge"
-msgstr ""
+msgstr "Vnitřní most"
 
 msgid "Support transition"
 msgstr "Přechod podpory"

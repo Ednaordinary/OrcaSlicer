@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <libslic3r/ExtrusionEntity.hpp>
 #include <stdio.h>
 #include <memory>
 
@@ -959,16 +960,26 @@ std::vector<SurfaceFill> group_fills(const Layer &layer, LockRegionParam &lock_p
 					layerm.flow(extrusion_role, (surface.thickness == -1) ? layer.height : surface.thickness);
 
 				params.role_speed = 0;
-                if (params.extrusion_role == erBridgeInfill)
-                    params.role_speed = region_config.bridge_speed;
-                else if (params.extrusion_role == erInternalBridgeInfill)
-                    params.role_speed = region_config.get_abs_value("internal_bridge_speed");
-                else if (params.extrusion_role == erInternalInfill)
-                    params.role_speed = region_config.sparse_infill_speed;
-                else if (params.extrusion_role == erTopSolidInfill)
-                    params.role_speed = region_config.top_surface_speed;
-                else if (params.extrusion_role == erSolidInfill)
-                    params.role_speed = region_config.internal_solid_infill_speed;
+				        switch (params.extrusion_role) {
+				            case erBridgeInfill:
+				                params.role_speed = region_config.bridge_speed;
+				                break;
+				            case erInternalBridgeInfill:
+				                params.role_speed = region_config.get_abs_value("internal_bridge_speed");
+				                break;
+				            case erWaveBridgeInfill:
+				                params.role_speed = region_config.get_abs_value("wo_bridge_speed");
+				                break;
+				            case erInternalInfill:
+				                params.role_speed = region_config.sparse_infill_speed;
+				                break;
+				            case erTopSolidInfill:
+				                params.role_speed = region_config.top_surface_speed;
+				                break;
+				            case erSolidInfill:
+				                params.role_speed = region_config.internal_solid_infill_speed;
+				                break;
+				        }
 				// Calculate flow spacing for infill pattern generation.
 		        if (surface.is_solid() || is_bridge) {
 		            params.spacing = params.flow.spacing();

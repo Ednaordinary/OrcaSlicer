@@ -4759,7 +4759,7 @@ msgid "Bottom surface"
 msgstr "Dolna powierzchnia"
 
 msgid "Internal bridge"
-msgstr ""
+msgstr "Wewnętrzny most"
 
 msgid "Support transition"
 msgstr "Przejście podpór"

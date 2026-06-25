@@ -4766,7 +4766,7 @@ msgid "Bottom surface"
 msgstr "Нижня поверхня"
 
 msgid "Internal bridge"
-msgstr ""
+msgstr "Внутрішній міст"
 
 msgid "Support transition"
 msgstr "Годтримка переходу"

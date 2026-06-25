@@ -4737,7 +4737,7 @@ msgid "Bottom surface"
 msgstr "Bề mặt dưới"
 
 msgid "Internal bridge"
-msgstr ""
+msgstr "Cầu bên trong"
 
 msgid "Support transition"
 msgstr "Chuyển tiếp support"

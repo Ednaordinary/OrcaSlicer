@@ -1663,6 +1663,16 @@ void PrintConfigDef::init_fff_params()
     def->min = 1;
     def->mode = comAdvanced;
     def->set_default_value(new ConfigOptionFloatOrPercent(150, true));
+    
+    def = this->add("wo_bridge_speed", coFloatOrPercent);
+    def->label = L("Wave");
+    def->category = L("Speed");
+    def->tooltip = L("Speed of wave overhangs/bridges. If the value is expressed as a percentage, it will be calculated based on the bridge_speed. Default value is 2 mm/s.");
+    def->sidetext = L("mm/s or %");
+    def->ratio_over = "bridge_speed";
+    def->min = 0.1;
+    def->mode = comExpert;
+    def->set_default_value(new ConfigOptionFloatOrPercent(2, false));
 
     def = this->add("brim_width", coFloat);
     def->label = L("Brim width");

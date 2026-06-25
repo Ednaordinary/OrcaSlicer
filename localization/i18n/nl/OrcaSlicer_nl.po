@@ -10703,7 +10703,7 @@ msgid " can not be placed in the "
 msgstr ""
 
 msgid "Internal Bridge"
-msgstr ""
+msgstr "Interne Brug"
 
 # TODO: Review, changed by lang refactor. PR 14254
 #, boost-format

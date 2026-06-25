@@ -4757,7 +4757,7 @@ msgid "Bottom surface"
 msgstr "Apatinis paviršius"
 
 msgid "Internal bridge"
-msgstr ""
+msgstr "Vidinis tiltas"
 
 msgid "Support transition"
 msgstr "Atramų perėjimas"
