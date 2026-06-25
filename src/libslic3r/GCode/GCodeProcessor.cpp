@@ -20,7 +20,6 @@
 
 #include <float.h>
 #include <assert.h>
-#include <libslic3r/ExtrusionEntity.hpp>
 #include <regex>
 #include <charconv>
 #include <string>
@@ -3419,13 +3418,6 @@ bool GCodeProcessor::process_simplify3d_tags(const std::string_view comment)
         return true;
     }
     
-    // ; wave bridge
-    pos = cmt.find(" wave bridge");
-    if (pos == 0) {
-        set_extrusion_role(erWaveBridgeInfill);
-        return true;
-    }
-
     // ; support
     pos = cmt.find(" support");
     if (pos == 0) {
@@ -3579,8 +3571,6 @@ bool GCodeProcessor::process_ideamaker_tags(const std::string_view comment)
             set_extrusion_role(erBridgeInfill);
         else if (type == "INTERNAL BRIDGE")
             set_extrusion_role(erInternalBridgeInfill);
-        else if (type == "WAVE BRIDGE")
-            set_extrusion_role(erWaveBridgeInfill);
         else if (type == "SUPPORT")
             set_extrusion_role(erSupportMaterial);
         else {
