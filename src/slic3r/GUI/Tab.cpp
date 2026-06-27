@@ -2546,6 +2546,8 @@ void TabPrint::build()
         line.append_option(optgroup->get_option("overhang_4_4_speed"));
         optgroup->append_line(line);
         optgroup->append_separator();
+        optgroup->append_single_option_line("wo_bridge_speed");
+        optgroup->append_separator();
         line = { L("Bridge"), L("Set speed for external and internal bridges") };
         line.append_option(optgroup->get_option("bridge_speed"));
         line.append_option(optgroup->get_option("internal_bridge_speed"));
