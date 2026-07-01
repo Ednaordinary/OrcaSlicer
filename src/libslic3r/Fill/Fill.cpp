@@ -962,22 +962,22 @@ std::vector<SurfaceFill> group_fills(const Layer &layer, LockRegionParam &lock_p
 				params.role_speed = 0;
 				switch (params.extrusion_role) {
 				    case erBridgeInfill:
-				        params.role_speed = region_config.bridge_speed;
+				        params.role_speed = region_config.bridge_speed.get_at(layer.get_extruder_id(params.extruder));
 				        break;
 				    case erInternalBridgeInfill:
-				        params.role_speed = region_config.get_abs_value("internal_bridge_speed");
+				        params.role_speed = region_config.get_abs_value_at("internal_bridge_speed", layer.get_extruder_id(params.extruder));
 				        break;
 				    case erWaveBridgeInfill:
-				        params.role_speed = region_config.get_abs_value("wo_bridge_speed");
+				        params.role_speed = region_config.get_abs_value_at("wo_bridge_speed", layer.get_extruder_id(params.extruder));
 				        break;
 				    case erInternalInfill:
-				        params.role_speed = region_config.sparse_infill_speed;
+				        params.role_speed = region_config.sparse_infill_speed.get_at(layer.get_extruder_id(params.extruder));
 				        break;
 				    case erTopSolidInfill:
-				        params.role_speed = region_config.top_surface_speed;
+				        params.role_speed = region_config.top_surface_speed.get_at(layer.get_extruder_id(params.extruder));
 				        break;
 				    case erSolidInfill:
-				        params.role_speed = region_config.internal_solid_infill_speed;
+				        params.role_speed = region_config.internal_solid_infill_speed.get_at(layer.get_extruder_id(params.extruder));
 				        break;
 				}
 				// Calculate flow spacing for infill pattern generation.
