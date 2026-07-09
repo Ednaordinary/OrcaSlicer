@@ -6564,39 +6564,56 @@ std::string GCode::_extrude(const ExtrusionPath &path, std::string description, 
 
     // set speed
     if (speed == -1) {
-        if (path.role() == erPerimeter) {
-            speed = NOZZLE_CONFIG(inner_wall_speed);
-            if (sloped) {
-                speed = std::min(speed, m_config.scarf_joint_speed.get_abs_value(speed));
-            }
-        } else if (path.role() == erExternalPerimeter) {
-            speed = NOZZLE_CONFIG(outer_wall_speed);
-            if (sloped) {
-                speed = std::min(speed, m_config.scarf_joint_speed.get_abs_value(speed));
-            }
-        } 
-        else if(path.role() == erInternalBridgeInfill) {
-            speed = m_config.get_abs_value_at("internal_bridge_speed", cur_extruder_index());
-        } else if (path.role() == erOverhangPerimeter || path.role() == erSupportTransition || path.role() == erBridgeInfill) {
-            speed = NOZZLE_CONFIG(bridge_speed);
-        } else if (path.role() == erInternalInfill) {
-            speed = NOZZLE_CONFIG(sparse_infill_speed);
-        } else if (path.role() == erSolidInfill) {
-            speed = NOZZLE_CONFIG(internal_solid_infill_speed);
-        } else if (path.role() == erTopSolidInfill) {
-            speed = NOZZLE_CONFIG(top_surface_speed);
-        } else if (path.role() == erIroning) {
-            speed = m_config.get_abs_value("ironing_speed");
-        } else if (path.role() == erBottomSurface) {
-            speed = NOZZLE_CONFIG(initial_layer_infill_speed);
-        } else if (path.role() == erGapFill) {
-            speed = NOZZLE_CONFIG(gap_infill_speed);
-        } else if (path.role() == erSupportMaterial) {
-            speed = NOZZLE_CONFIG(support_speed);
-        } else if (path.role() == erSupportMaterialInterface) {
-            speed = NOZZLE_CONFIG(support_interface_speed);
-        } else {
-            throw Slic3r::InvalidArgument("Invalid speed");
+        switch (path.role()) {
+            case erPerimeter:
+                speed = NOZZLE_CONFIG(inner_wall_speed);
+                if (sloped) {
+                    speed = std::min(speed, m_config.scarf_joint_speed.get_abs_value(speed));
+                }
+                break;
+            case erExternalPerimeter:
+                speed = NOZZLE_CONFIG(outer_wall_speed);
+                if (sloped) {
+                    speed = std::min(speed, m_config.scarf_joint_speed.get_abs_value(speed));
+                }
+                break;
+            case erInternalBridgeInfill:
+                speed = m_config.get_abs_value_at("internal_bridge_speed", cur_extruder_index());
+                break;
+            case erWaveBridgeInfill:
+                speed = m_config.get_abs_value("wo_bridge_speed");
+                break;
+            case erOverhangPerimeter:
+            case erSupportTransition:
+            case erBridgeInfill:
+                speed = NOZZLE_CONFIG(bridge_speed);
+                break;
+            case erInternalInfill:
+                speed = NOZZLE_CONFIG(sparse_infill_speed);
+                break;
+            case erSolidInfill:
+                speed = NOZZLE_CONFIG(internal_solid_infill_speed);
+                break;
+            case erTopSolidInfill:
+                speed = NOZZLE_CONFIG(top_surface_speed);
+                break;
+            case erIroning:
+                speed = m_config.get_abs_value("ironing_speed");
+                break;
+            case erBottomSurface:
+                speed = NOZZLE_CONFIG(initial_layer_infill_speed);
+                break;
+            case erGapFill:
+                speed = NOZZLE_CONFIG(gap_infill_speed);
+                break;
+            case erSupportMaterial:
+                speed = NOZZLE_CONFIG(support_speed);
+                break;
+            case erSupportMaterialInterface:
+                speed = NOZZLE_CONFIG(support_interface_speed);
+                break;
+            default:
+                throw Slic3r::InvalidArgument("Invalid speed");
         }
     }
     //BBS: if not set the speed, then use the filament_max_volumetric_speed directly
