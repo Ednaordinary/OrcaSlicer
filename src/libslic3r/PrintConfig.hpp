@@ -513,6 +513,7 @@ inline bool is_auto_filament_map_mode(FilamentMapMode mode) {
 enum class WaveOverhangPattern : int {
     Monotonic,
     ZigZag,
+};
 
 // Dual-extruder purge control. Default reproduces the current
 // per-extruder flush_multiplier + filament_prime_volume behaviour, so absent/default is inert.
