@@ -8,6 +8,7 @@
 #include "Settings.hpp"
 #include "SegmentTemplate.hpp"
 #include "OptionTemplate.hpp"
+#include <libvgcode/include/Types.hpp>
 #if VGCODE_ENABLE_COG_AND_TOOL_MARKERS
 #include "CogMarker.hpp"
 #include "ToolMarker.hpp"
@@ -85,6 +86,15 @@ public:
     bool is_top_layer_only_view_range() const { return m_settings.top_layer_only_view_range; }
     void toggle_top_layer_only_view_range();
 
+    // ORCA: darken every layer the layer slider is not scrubbed to, so that only the inspected
+    // one(s) - the top thumb's layer, the bottom thumb's layer, or both - stay at full
+    // brightness. dim_previous_layers_brightness sets how dark the rest go, 1.0 = unchanged,
+    // 0.0 = black
+    bool is_dim_previous_layers() const { return m_settings.dim_previous_layers; }
+    void set_dim_previous_layers(bool value);
+    float get_dim_previous_layers_brightness() const { return m_settings.dim_previous_layers_brightness; }
+    void set_dim_previous_layers_brightness(float value);
+
     bool is_spiral_vase_mode() const { return m_settings.spiral_vase_mode; }
 
     std::vector<ETimeMode> get_time_modes() const;
@@ -112,8 +122,8 @@ public:
         EGCodeExtrusionRole::Skirt, EGCodeExtrusionRole::SupportMaterial, EGCodeExtrusionRole::SupportMaterialInterface,
         EGCodeExtrusionRole::WipeTower, EGCodeExtrusionRole::Custom,
         // ORCA
-        EGCodeExtrusionRole::BottomSurface, EGCodeExtrusionRole::InternalBridgeInfill, EGCodeExtrusionRole::Brim,
-        EGCodeExtrusionRole::SupportTransition, EGCodeExtrusionRole::Mixed
+        EGCodeExtrusionRole::BottomSurface, EGCodeExtrusionRole::InternalBridgeInfill, EGCodeExtrusionRole::WaveBridgeInfill,
+        EGCodeExtrusionRole::Brim, EGCodeExtrusionRole::SupportTransition, EGCodeExtrusionRole::Mixed
     }) const;
 
     bool is_option_visible(EOptionType type) const;

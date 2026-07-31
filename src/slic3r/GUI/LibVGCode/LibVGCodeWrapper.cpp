@@ -89,6 +89,7 @@ Slic3r::ExtrusionRole convert(EGCodeExtrusionRole role)
     // ORCA
     case EGCodeExtrusionRole::BottomSurface:            { return Slic3r::ExtrusionRole::erBottomSurface; }
     case EGCodeExtrusionRole::InternalBridgeInfill:     { return Slic3r::ExtrusionRole::erInternalBridgeInfill; }
+    case EGCodeExtrusionRole::WaveBridgeInfill:         { return Slic3r::ExtrusionRole::erWaveBridgeInfill; }
     case EGCodeExtrusionRole::Brim:                     { return Slic3r::ExtrusionRole::erBrim; }
     case EGCodeExtrusionRole::SupportTransition:        { return Slic3r::ExtrusionRole::erSupportTransition; }
     case EGCodeExtrusionRole::Mixed:                    { return Slic3r::ExtrusionRole::erMixed; }
@@ -118,6 +119,7 @@ EGCodeExtrusionRole convert(Slic3r::ExtrusionRole role)
     // ORCA
     case Slic3r::ExtrusionRole::erBottomSurface:               { return EGCodeExtrusionRole::BottomSurface; }
     case Slic3r::ExtrusionRole::erInternalBridgeInfill:        { return EGCodeExtrusionRole::InternalBridgeInfill; }
+    case Slic3r::ExtrusionRole::erWaveBridgeInfill:            { return EGCodeExtrusionRole::WaveBridgeInfill; }
     case Slic3r::ExtrusionRole::erBrim:                        { return EGCodeExtrusionRole::Brim; }
     case Slic3r::ExtrusionRole::erSupportTransition:           { return EGCodeExtrusionRole::SupportTransition; }
     case Slic3r::ExtrusionRole::erMixed:                       { return EGCodeExtrusionRole::Mixed; }
@@ -215,8 +217,8 @@ GCodeInputData convert(const Slic3r::GCodeProcessorResult& result, const std::ve
         const EOptionType option_type = move_type_to_option(curr_type);
         if (option_type == EOptionType::COUNT || option_type == EOptionType::Travels || option_type == EOptionType::Wipes) {
             if (ret.vertices.empty() || prev.type != curr.type || prev.extrusion_role != curr.extrusion_role
-                // ORCA: Fix issue with flow rate changes being visualized incorrectly
-                || prev.mm3_per_mm != curr.mm3_per_mm) {
+                // ORCA: Split the path when a preview value changes.
+                || prev.mm3_per_mm != curr.mm3_per_mm || prev.acceleration != curr.acceleration || prev.jerk != curr.jerk) {
                 // to allow libvgcode to properly detect the start/end of a path we need to add a 'phantom' vertex
                 // equal to the current one with the exception of the position, which should match the previous move position,
                 // and the times, which are set to zero
