@@ -1,4 +1,3 @@
-// #include "libslic3r/GCodeSender.hpp"
 #include "ConfigManipulation.hpp"
 #include "I18N.hpp"
 #include "GUI_App.hpp"
@@ -1051,6 +1050,11 @@ void ConfigManipulation::toggle_print_fff_options(DynamicPrintConfig *config, in
     bool has_zaa = config->opt_bool("zaa_enabled");
     for (auto el : {"zaa_minimize_perimeter_height", "zaa_min_z", "zaa_dont_alternate_fill_direction", "ironing_expansion"})
         toggle_line(el, has_zaa);
+
+    bool wo_enabled = config->opt_bool("wo_enabled");
+    for (auto el : {"wo_density", "wo_pattern"})
+        toggle_line(el, wo_enabled);
+    toggle_line("wo_bridge_speed", wo_enabled, variant_index);
 
     bool have_sequential_printing = (config->opt_enum<PrintSequence>("print_sequence") == PrintSequence::ByObject);
     // for (auto el : { "extruder_clearance_radius", "extruder_clearance_height_to_rod", "extruder_clearance_height_to_lid" })
